@@ -1,7 +1,7 @@
 Package: decryptSound
 Title: An extensible API for breaking captchas
 Version: 0.2.1.9000
-Authors@R: c(person("Joe", "Developer", role = c("aut", "cre"),
+Authors@R: c(person("Thiago", "Nato", role = c("aut", "cre"),
                      email = "nato.tns@gmail.com"),
               person("Pat", "Developer", role = "aut"),
               person("A.", "User", role = "ctb",
