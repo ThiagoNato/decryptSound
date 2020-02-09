@@ -1,5 +1,5 @@
 library(tidyverse)
-library(magrittr)
+#library(magrittr)
 library(base64enc)
 library(tuneR)
 
@@ -21,7 +21,7 @@ quebrar_letras <- function(onda) {
     dplyr::mutate(revacu = cumsum(abs_som)) %>%
     dplyr::arrange(tempo) %>%
     dplyr::filter(acu > 0, revacu > 0)
-  
+
   cortes <- d_clean %>%
     dplyr::filter(som == 0) %>%
     dplyr::mutate(lg = dplyr::lag(tempo), trocou = (tempo != lg + 1)) %>%
@@ -34,7 +34,7 @@ quebrar_letras <- function(onda) {
     dplyr::mutate(corte = round((xf + xi) / 2)) %>%
     with(corte) %>%
     sort()
-  
+
   d_clean %>%
     dplyr::mutate(
       letra = cut(tempo, c(0, cortes, max(tempo))),
@@ -102,26 +102,26 @@ predizer <- function(arq_aud) {
 }
 
 decryptSound <- function(mp3_encoded, guid) {
-  
+
   mp3 <- stringr::str_c(guid, ".mp3")
   wav <- stringr::str_c(guid, ".wav")
-  
+
   #Salva o mp3 localmente
   fs <- file(mp3, "wb")
   base64enc::base64decode(mp3_encoded, fs)
   close(fs)
-  
+
   #lÃª o mp3 para conversÃ£o Wav
   rmp3 <- readMP3(mp3)
-  
+
   #converte o mp3 para wav
   writeWave(rmp3, wav, extensible = FALSE)
-  
+
   p <- predizer(wav)
-  
+
   file.remove(mp3)
   file.remove(wav)
-  
+
   return(p)
 }
 

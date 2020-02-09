@@ -8,17 +8,11 @@ License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
-  abind,
-  magrittr,
-  stringr,
-  httr,
-  grDevices,
+  tibble,
+  dplyr,
   purrr,
-  keras,
-  progress,
-  decryptrModels,
-  tfdatasets,
-  magick
+  glue,
+  stringr
 Suggests:
   knitr,
   rmarkdown,
