@@ -1,5 +1,6 @@
 library(tidyverse)
 library(magrittr)
+library(base64enc)
 library(tuneR)
 
 ler_audio <- function(arq_aud) {
