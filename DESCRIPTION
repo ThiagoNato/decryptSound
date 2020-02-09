@@ -3,9 +3,8 @@ Title: An extensible API for breaking captchas
 Version: 0.2.1.9000
 Authors@R: c(person("Thiago", "Nato", role = c("aut", "cre"),
                      email = "nato.tns@gmail.com"),
-              person("Pat", "Developer", role = "aut"),
-              person("A.", "User", role = "ctb",
-                     email = "A.User@whereever.net"))
+              person("Lucas", "Collina", role = "ctb",
+                     email = "lucascollina@gmail.com"))
 Description: Test
 Depends: R (>= 3.4.0)
 License: GPL-3 | file LICENSE
