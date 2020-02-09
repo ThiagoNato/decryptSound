@@ -1,0 +1,30 @@
+Package: decryptSound
+Title: An extensible API for breaking captchas
+Version: 0.2.1.9000
+Authors@R: c(person("Thiago", "Nato", role = c("aut"))
+Description: Test
+Depends: R (>= 3.4.0)
+License: GPL-3 | file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+  abind,
+  magrittr,
+  stringr,
+  httr,
+  grDevices,
+  purrr,
+  keras,
+  progress,
+  decryptrModels,
+  tfdatasets,
+  magick
+Suggests:
+  knitr,
+  rmarkdown,
+  testthat,
+  covr,
+  readr
+VignetteBuilder: knitr
+RoxygenNote: 6.1.0
+Roxygen: list(markdown = TRUE, roclets = c("rd", "namespace", "collate"))
