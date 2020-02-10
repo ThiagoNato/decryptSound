@@ -110,7 +110,6 @@ predizer <- function(arq_aud) {
 #'
 #' @export
 decryptSound <- function(mp3_encoded, guid) {
-
   mp3 <- stringr::str_c(guid, ".mp3")
   wav <- stringr::str_c(guid, ".wav")
 
@@ -120,10 +119,10 @@ decryptSound <- function(mp3_encoded, guid) {
   close(fs)
 
   #lÃª o mp3 para conversÃ£o Wav
-  rmp3 <- readMP3(mp3)
+  rmp3 <- tuneR::readMP3(mp3)
 
   #converte o mp3 para wav
-  writeWave(rmp3, wav, extensible = FALSE)
+  tuneR::writeWave(rmp3, wav, extensible = FALSE)
 
   p <- predizer(wav)
 
