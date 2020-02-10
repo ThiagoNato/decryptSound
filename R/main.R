@@ -1,4 +1,5 @@
 library(tidyverse)
+library(magrittr)
 library(tuneR)
 
 ler_audio <- function(arq_aud) {
@@ -91,7 +92,7 @@ predizer <- function(arq_aud) {
     "y", 16652035,
     "z", 13875621
   )
-  arq_aud %>%
+    arq_aud %>%
     tabelar_letras() %>%
     dplyr::mutate(soma = abs(soma)) %>%
     dplyr::mutate(res = purrr::map_chr(soma, ~ mais_perto(d, .x))) %>%
