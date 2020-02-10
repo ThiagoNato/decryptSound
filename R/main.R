@@ -1,6 +1,4 @@
 library(tidyverse)
-#library(magrittr)
-library(base64enc)
 library(tuneR)
 
 ler_audio <- function(arq_aud) {
@@ -105,21 +103,16 @@ predizer <- function(arq_aud) {
 #'
 #' @description Given one mp3 and one guid code.
 #'
-#' @param mp3_encoded .
+#' @param mp3 .
 #' @param guid
 #'
 #' @export
-decryptSound <- function(mp3_encoded, guid) {
-  mp3 <- stringr::str_c(guid, ".mp3")
-  wav <- stringr::str_c(guid, ".wav")
-
-  #Salva o mp3 localmente
-  fs <- file(mp3, "wb")
-  base64enc::base64decode(mp3_encoded, fs)
-  close(fs)
+decryptSound <- function(mp3, guid) {
 
   #lê o mp3 para conversão Wav
   rmp3 <- tuneR::readMP3(mp3)
+
+  wav <- stringr::str_c(guid, ".wav")
 
   #converte o mp3 para wav
   tuneR::writeWave(rmp3, wav, extensible = FALSE)
