@@ -101,6 +101,14 @@ predizer <- function(arq_aud) {
     glue::glue_collapse()
 }
 
+#' @title Break captchas sound
+#'
+#' @description Given one mp3 and one guid code.
+#'
+#' @param mp3_encoded .
+#' @param guid
+#'
+#' @export
 decryptSound <- function(mp3_encoded, guid) {
 
   mp3 <- stringr::str_c(guid, ".mp3")
