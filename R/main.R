@@ -146,7 +146,7 @@ decryptSound <- function (mp3_encoded) {
   close(fs)
 
   #lê o mp3 para conversão Wav
-  rmp3 <- readMP3(mp3)
+  rmp3 <- tuneR::readMP3(mp3)
 
   #converte o mp3 para wav
   writeWave(rmp3, wav, extensible=FALSE)
