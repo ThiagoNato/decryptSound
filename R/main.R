@@ -1,9 +1,9 @@
 #' Author: Thiago Nato
 #' Subject:
-
 library(tidyverse)
 library(magrittr)
 library(tuneR)
+library(uuid)
 
 # Import -----------------------------------------------------------------------
 
@@ -130,19 +130,19 @@ predizer <- function(arq_aud) {
 #'
 #' @description Given one mp3 and one guid code.
 #'
-#' @param mp3 .
+#' @param encode64 .
 # @param guid
 #'
 #' @export
 #decryptSound <- function(mp3, guid) {
-decryptSound <- function (mp3_encoded) {
-  file <- "audio"
+decryptSound <- function (encode64) {
+  file <- uuid::UUIDgenerate()
   mp3 <- stringr::str_c(file, ".mp3")
   wav <- stringr::str_c(file, ".wav")
 
   #Salva o mp3 localmente
   fs <- file(mp3, "wb")
-  mp3_decoded <- base64enc::base64decode(mp3_encoded, fs)
+  mp3_decoded <- base64enc::base64decode(encode64, fs)
   close(fs)
 
   #lê o mp3 para conversão Wav

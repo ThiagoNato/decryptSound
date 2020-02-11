@@ -4,10 +4,10 @@
 \alias{decryptSound}
 \title{Break captchas sound}
 \usage{
-decryptSound(mp3_encoded)
+decryptSound(encode64)
 }
 \arguments{
-\item{mp3}{.}
+\item{encode64}{.}
 }
 \description{
 Given one mp3 and one guid code.
