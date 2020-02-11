@@ -1,12 +1,18 @@
+#' Author: Thiago Nato
+#' Subject:
+
 library(tidyverse)
 library(magrittr)
 library(tuneR)
+
+# Import -----------------------------------------------------------------------
 
 ler_audio <- function(arq_aud) {
   tuneR::readWave(arq_aud)@left
 }
 
 quebrar_letras <- function(onda) {
+
   d_clean <- tibble::tibble(
     som = onda,
     tempo = 1:length(onda)
@@ -48,6 +54,26 @@ tabelar_letras <- function(arq_aud) {
     quebrar_letras() %>%
     dplyr::group_by(letra) %>%
     dplyr::summarise(soma = sum(som))
+}
+
+classify <- function(cap, ans, path, rm_old) {
+  name <- tools::file_path_sans_ext(basename(cap))
+  ext <- tools::file_ext(basename(cap))
+  path <- ifelse(is.null(path), dirname(cap), normalizePath(path))
+  new_file <- stringr::str_c(path, name, "_", ans, ".", ext)
+  file.copy(cap, new_file, overwrite = TRUE)
+  if (rm_old) file.remove(cap)
+  return(new_file)
+}
+
+get_answer <- function(file) {
+  basename(file) %>%
+    tools::file_path_sans_ext() %>%
+    stringr::str_extract("_([a-zA-Z0-9]+)$") %>%
+    stringr::str_sub(start = 2) %>%
+    stringr::str_to_lower() %>%
+    stringr::str_split("") %>%
+    purrr::flatten_chr()
 }
 
 mais_perto <- function(d, soma) {
@@ -92,7 +118,7 @@ predizer <- function(arq_aud) {
     "y", 16652035,
     "z", 13875621
   )
-    arq_aud %>%
+  arq_aud %>%
     tabelar_letras() %>%
     dplyr::mutate(soma = abs(soma)) %>%
     dplyr::mutate(res = purrr::map_chr(soma, ~ mais_perto(d, .x))) %>%
@@ -105,25 +131,51 @@ predizer <- function(arq_aud) {
 #' @description Given one mp3 and one guid code.
 #'
 #' @param mp3 .
-#' @param guid
+# @param guid
 #'
 #' @export
-decryptSound <- function(mp3, guid) {
+#decryptSound <- function(mp3, guid) {
+decryptSound <- function (mp3_encoded) {
+  file <- "audio"
+  mp3 <- stringr::str_c(file, ".mp3")
+  wav <- stringr::str_c(file, ".wav")
+
+  #Salva o mp3 localmente
+  fs <- file(mp3, "wb")
+  mp3_decoded <- base64enc::base64decode(mp3_encoded, fs)
+  close(fs)
 
   #lê o mp3 para conversão Wav
-  rmp3 <- tuneR::readMP3(mp3)
-
-  wav <- stringr::str_c(guid, ".wav")
+  rmp3 <- readMP3(mp3)
 
   #converte o mp3 para wav
-  tuneR::writeWave(rmp3, wav, extensible = FALSE)
+  writeWave(rmp3, wav, extensible=FALSE)
 
+  #beepr::beep(wav)
   p <- predizer(wav)
+
+  #f <- classify(wav, p, d, TRUE)
+  #print(f)
 
   file.remove(mp3)
   file.remove(wav)
 
   return(p)
+
+  # #lê o mp3 para conversão Wav
+  # rmp3 <- tuneR::readMP3(mp3)
+  #
+  # wav <- stringr::str_c(guid, ".wav")
+  #
+  # #converte o mp3 para wav
+  # tuneR::writeWave(rmp3, wav, extensible = FALSE)
+  #
+  # p <- predizer(wav)
+  #
+  # file.remove(mp3)
+  # file.remove(wav)
+  #
+  # return(p)
 }
 
 
